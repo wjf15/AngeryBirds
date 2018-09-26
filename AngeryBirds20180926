@@ -1,0 +1,75 @@
+//WCMN Lab 1    
+    #include <iostream>
+    #include <math.h>
+    using namespace std;
+    
+    int main()
+{
+  const double g=-9.8; //Acceleration due to gravity in y
+  const double PI=3.1415926; //It's Pi dude...
+   double FA; //Initial Angle in Degrees
+   double angi; //Initial Angle in Radians
+   double Vi; //Initial Velocity
+   double x; //Distance to Building
+   double hb; //Height of Building
+   double t; //Time to hit building
+   double vx; //Velocity in x
+   double vyi; //Velocity in y
+   double hid; //height at Distance
+   double hin;//height at intial
+   double vfy; //Final Velocity in y
+   double Vf; //Final Total Velocity
+   double angf; //Final angle in Radians
+   double angfd; //Final Angle in Degrees
+   
+   //set velocity, angle, distance, height
+   
+   cout << "Enter the Velocity in m/s:";
+   cin >> Vi;
+   cout<<"Enter Initial Angle:";
+   cin>>FA;
+   cout<<"Enter the Distance to the Target:";
+   cin>>x;
+   cout<<"Enter the Height of the building:";
+   cin>>hb;
+   cout<<"Enter the intial height:";
+   cin>>hin;
+   
+   //Equations Begin
+   angi=(PI/180)*FA; //Conversion from Degrees to Radians
+   vx=(Vi)*cos(angi); //Solution for Velocity in x
+   t=x/vx;
+   vyi=(Vi)*sin(angi);
+   hid=hin+(((Vi)*t)+(0.5)*(g)*(pow(t,2)));
+   vfy=vyi+g*t;
+   Vf=sqrt((pow(vx,2))+(pow(vfy,2)));
+   angf=atan(vx/vfy);
+   angfd=(180/PI)*angf;
+   cout<<"------------------------------------------------"<<endl;
+   
+   //Hit test
+   if (hb >= hid && hid >= 0)
+   {
+       cout <<"Target  was Hit"<<endl;
+   }
+   if (hid<=0)
+   {
+       cout <<"Target hit the Ground"<<endl;
+       cout <<"Height is 0"<<endl;
+       cout <<
+       return 0;
+   }
+   else
+   {
+       cout <<"Target Missed"<<endl;
+   }
+   
+    
+   //Outputs
+   cout<<"The height at hit: "<<hid<<endl;
+   cout<<"Time of hit: "<<t<<endl;
+   cout<<"Final Velocity: "<<Vf<<endl;
+   cout<<"Final Direction: "<<angfd<<endl;
+   
+   return 0;
+}
