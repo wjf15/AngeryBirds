@@ -1,0 +1,98 @@
+//WCMN Lab 1    
+    #include <iostream>
+    #include <math.h>
+    using namespace std;
+    
+    int main()
+{
+  const double g=-9.8; //Acceleration due to gravity in y
+  const double PI=3.1415926; //It's Pi dude...
+   double FA; //Initial Angle in Degrees
+   double angi; //Initial Angle in Radians
+   double Vi; //Initial Velocity
+   double x; //Distance to Building
+   double hb; //Height of Building
+   double t; //Time to hit building
+   double vx; //Velocity in x
+   double vyi; //Velocity in y
+   double hid; //height at Distance
+   double hin;//height at intial
+   double vfy; //Final Velocity in y
+   double Vf; //Final Total Velocity
+   double angf; //Final angle in Radians
+   double angfd; //Final Angle in Degrees
+   
+   //set velocity, angle, distance, height
+   
+   cout << "Enter the Velocity in m/s:";
+   cin >> Vi;
+   cout<<"Enter Initial Angle:";
+   cin>>FA;
+   cout<<"Enter the Distance to the Target:";
+   cin>>x;
+   cout<<"Enter the Height of the building:";
+   cin>>hb;
+   cout<<"Enter the intial height:";
+   cin>>hin;
+   
+   //Equations Begin
+   angi=(PI/180)*FA;  //Conversion from Degrees to Radians
+   vx=(Vi)*cos(angi); //Solution for Velocity in x
+   t=x/vx;            //Solve for time
+   vyi=(Vi)*sin(angi);//Solve for initial y velocity
+   hid=hin+(((vyi)*t)+(0.5)*(g)*(pow(t,2)));//Solve for the height at possible hit
+   vfy=vyi+g*t;       //Solve for the final velocity in y
+   Vf=sqrt((pow(vx,2))+(pow(vfy,2)));//solve for final velocity
+   angf=atan(vfy/vx); //solve for the final direction in Radians
+   angfd=(180/PI)*angf;//Solve for the final direction in degrees
+   cout<<"------------------------------------------------"<<endl;
+   
+   //Hit test
+   if (hb >= hid && hid >= 0) //Tartget Hits
+   {
+       cout <<"Target  was Hit!"<<endl;
+       cout<<"The height at hit: "<<hid<<endl;
+       cout<<"The time of hit: "<<t<<endl;
+       cout<<"The final Velocity at hit: "<<Vf<<endl;
+       cout<<"The final Direction (Degrees): "<<angfd<<endl;
+       return 0;
+   }
+   
+   else if (hid<=0)//Target Hits ground
+   {
+       //Ground output equations
+       t=((-1)*sqrt(pow(vyi,2)-(2*g*hin))-(vyi))/g; //Solve for Time
+       vfy=vyi+g*t;   // Solve for the final velocity in y
+       Vf=sqrt((pow(vx,2))+(pow(vfy,2))); // solve for final velocity
+       angf=atan(vfy/vx); // solve for final direction in radians
+       angfd=(180/PI)*angf; // solve for the final direction in degrees
+   
+       //Ground Outputs
+       cout <<"Target hit the Ground!"<<endl;
+       cout <<"The height at hit: 0"<<endl;
+       cout <<"The time of hit: " <<t<<endl;
+       cout <<"The final Velocity at hit: " << Vf <<endl;
+       cout <<"The final Direction (Degrees): " << angfd<<endl;
+       return 0;
+   }
+   
+   else if (angi < 0 && hin == 0)//Fired down and has no intial height error fix
+   {
+        cout <<"Target hit the Ground!"<<endl;
+        cout<<"The height at hit: 0"<<endl;
+        cout<<"The time of hit: 0"<<endl;
+        cout<<"The final Velocity at hit: "<<Vi<<endl;
+        cout<<"The final Direction (Degrees): "<<angi<<endl;
+        return 0;
+   }
+   
+   else //Target misses
+   {
+       cout <<"Target Missed!"<<endl;
+       cout<<"The height at miss: "<<hid<<endl;
+       cout<<"The time of miss: "<<t<<endl;
+       cout<<"The final Velocity at miss: "<<Vf<<endl;
+       cout<<"The final Direction (Degrees): "<<angfd<<endl;
+       return 0;
+   }
+}
